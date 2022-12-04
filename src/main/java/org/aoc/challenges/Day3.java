@@ -1,6 +1,8 @@
 package org.aoc.challenges;
 
+import lombok.extern.slf4j.Slf4j;
 import org.aoc.Challenge;
+import org.aoc.annotations.Day;
 import org.aoc.utils.Input;
 
 import java.util.Collection;
@@ -10,10 +12,12 @@ import java.util.Set;
 
 import static java.util.stream.Collectors.toSet;
 
-public class Day3 implements Challenge<Integer> {
+@Day(day = 3)
+@Slf4j
+public class Day3 implements Challenge {
 
     @Override
-    public Integer firstChallenge(String fileName) {
+    public void firstChallenge(String fileName) {
         var lines = Input.allLinesDefaultDelimiter(fileName).toList();
         int total = 0;
         for (var line : lines) {
@@ -24,17 +28,18 @@ public class Day3 implements Challenge<Integer> {
                     .mapToInt(i -> i)
                     .sum();
         }
-        return total;
+        log.info("Day 3 first challenge : {}", total);
     }
 
     @Override
-    public Integer secondChallenge(String fileName) {
-        return Input.readFilePartitionedBySize(fileName, 3)
+    public void secondChallenge(String fileName) {
+        var result = Input.readFilePartitionedBySize(fileName, 3)
                 .stream()
                 .map(this::getCommonChars)
                 .flatMap(Collection::stream)
                 .mapToInt(this::getPriority)
                 .sum();
+        log.info("Day 3 second challenge : {}", result);
     }
 
     private Set<Integer> toIntegerSet(char[] arr) {

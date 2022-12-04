@@ -1,28 +1,34 @@
 package org.aoc.challenges;
 
+import lombok.extern.slf4j.Slf4j;
 import org.aoc.Challenge;
+import org.aoc.annotations.Day;
 import org.aoc.utils.Input;
 import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-public class Day4 implements Challenge<Integer> {
+@Day(day = 4)
+@Slf4j
+public class Day4 implements Challenge {
 
     @Override
-    public Integer firstChallenge(String fileName) {
-        return (int) Input.readFilePartitionedByDelimiter(fileName, ",")
+    public void firstChallenge(String fileName) {
+        var result = (int) Input.readFilePartitionedByDelimiter(fileName, ",")
                 .stream()
                 .filter(this::isPairInRange)
                 .count();
+        log.info("Day 4 first challenge : {}", result);
     }
 
     @Override
-    public Integer secondChallenge(String fileName) {
-        return (int) Input.readFilePartitionedByDelimiter(fileName, ",")
+    public void secondChallenge(String fileName) {
+        var result = (int) Input.readFilePartitionedByDelimiter(fileName, ",")
                 .stream()
                 .filter(this::isPairOverlapping)
                 .count();
+        log.info("Day 4 second challenge : {}", result);
     }
 
     private boolean isPairInRange(Pair<String, String> pair) {

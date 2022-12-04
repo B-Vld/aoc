@@ -1,8 +1,9 @@
 package org.aoc;
 
-public interface Challenge<T> {
+public interface Challenge {
 
-    T firstChallenge(String fileName);
-    T secondChallenge(String fileName);
+    void firstChallenge(String fileName);
+
+    void secondChallenge(String fileName);
 
 }

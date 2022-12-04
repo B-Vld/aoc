@@ -6,7 +6,6 @@ import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
@@ -19,14 +18,6 @@ public class Input {
     private static final String DEFAULT_LINE_DELIMITER = "\r\n";
     private static final String CONTENT_ROOT = "src/main/resources";
 
-    public static Stream<String> getAllFileLines(String path) {
-        try {
-            return Files.readAllLines(Paths.get(path)).stream();
-        } catch (IOException e) {
-            throw new IllegalStateException(e);
-        }
-    }
-
     public static Stream<String> allLinesDefaultDelimiter(String fileName) {
         return Arrays.stream(readAsString(fileName).split(DEFAULT_LINE_DELIMITER));
     }
@@ -37,6 +28,10 @@ public class Input {
         } catch (IOException e) {
             throw new IllegalStateException(e);
         }
+    }
+
+    public static Stream<String> readString(String name, String lineDelimiter) {
+        return Arrays.stream(readAsString(name).split(lineDelimiter));
     }
 
     public static Stream<String> readAsString(String name, String lineDelimiter) {
