@@ -1,6 +1,7 @@
 package org.aoc.challenges;
 
 import lombok.extern.slf4j.Slf4j;
+import org.aoc.Challenge;
 import org.aoc.annotations.Day;
 import org.aoc.utils.Input;
 import org.apache.commons.lang3.tuple.Pair;
@@ -10,16 +11,18 @@ import java.util.stream.Stream;
 
 @Day(day = 2)
 @Slf4j
-public class Day2 {
+public class Day2 implements Challenge {
 
-    public void part1() {
+    @Override
+    public void firstChallenge(String fileName) {
         Optional<Integer> score = games()
                 .map(this::score)
                 .reduce(Math::addExact);
         score.ifPresent(val -> log.info("Total score: {}", val));
     }
 
-    public void part2() {
+    @Override
+    public void secondChallenge(String fileName) {
         Optional<Integer> score = games()
                 .map(pair -> Pair.of(pair.getLeft(), (pair.getLeft() + pair.getRight() + 2) % 3))
                 .map(this::score)
