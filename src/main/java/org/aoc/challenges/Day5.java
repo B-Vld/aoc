@@ -24,7 +24,7 @@ public class Day5 implements Challenge {
                 .map(str -> str.replaceAll("[^0-9]+", " ").trim().split(" "))
                 .map(this::toIntArray)
                 .forEach(movement -> moveCratesFirst(map, movement[0], movement[1], movement[2]));
-        log.info("Day 5 first challenge : {}", resultOne(map));
+        log.info("Day 5 first challenge : {}", result(map));
     }
 
     @Override
@@ -39,7 +39,7 @@ public class Day5 implements Challenge {
                 .map(str -> str.replaceAll("[^0-9]+", " ").trim().split(" "))
                 .map(this::toIntArray)
                 .forEach(movement -> moveCratesSecond(map, movement[0], movement[1], movement[2]));
-        log.info("Day 5 first challenge : {}", resultOne(map));
+        log.info("Day 5 second challenge : {}", result(map));
     }
 
     private Map<Integer, LinkedList<Character>> getInputCrates(List<Character[]> crateLines) {
@@ -100,7 +100,7 @@ public class Day5 implements Challenge {
         }
     }
 
-    private String resultOne(Map<Integer, LinkedList<Character>> map) {
+    private String result(Map<Integer, LinkedList<Character>> map) {
         StringBuilder builder = new StringBuilder();
         map.forEach((k, v) -> {
             var lst = map.get(k);
