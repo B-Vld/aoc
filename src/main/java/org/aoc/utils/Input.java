@@ -46,6 +46,23 @@ public class Input {
                 .values();
     }
 
+    public static List<String> readFirstXLines(String name, int x) {
+        return readAsString(name, "\n")
+                .toList()
+                .stream()
+                .limit(x)
+                .toList();
+    }
+
+    public static List<String> readSkipXLines(String name, int x) {
+        return readAsString(name, "\n")
+                .toList()
+                .stream()
+                .skip(x)
+                .toList();
+    }
+
+
     public static Collection<Pair<String, String>> readFilePartitionedByDelimiter(String name, String delimiter) {
         return readAsString(name, DEFAULT_LINE_DELIMITER)
                 .toList()
