@@ -8,7 +8,6 @@ import org.aoc.structures.DirectoryTree;
 import org.aoc.utils.Input;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 import java.util.regex.Pattern;
 
@@ -16,9 +15,9 @@ import java.util.regex.Pattern;
 @Slf4j
 public class Day7 implements Challenge {
 
+    private static final List<DirectoryTree> nodesHolder = new ArrayList<>();
     private static DirectoryTree ROOT;
     private final Pattern NUMERIC = Pattern.compile("-?\\d+(\\.\\d+)?");
-    private static final List<DirectoryTree> nodesHolder = new ArrayList<>();
 
     @Override
     public void firstChallenge(String fileName) {
@@ -65,7 +64,7 @@ public class Day7 implements Challenge {
         }
 
         var result = nodesHolder.stream()
-                .map(DirectoryTree::sizeOfAllSubtrees)
+                .map(DirectoryTree::sizeOfNode)
                 .filter(size -> size < 100_000)
                 .mapToInt(i -> i)
                 .sum();
@@ -76,14 +75,9 @@ public class Day7 implements Challenge {
 
     @Override
     public void secondChallenge(String fileName) {
-        var spaceNeeded = nodesHolder.stream()
-                .map(DirectoryTree::sizeOfAllSubtrees)
-                .sorted(Comparator.reverseOrder())
-                .limit(1)
-                .findFirst()
-                .orElse(-1) + 30000000 - 70000000;
+        var spaceNeeded = DirectoryTree.sizeOfNode(ROOT) - 40_000_000;
         var result = nodesHolder.stream()
-                .map(DirectoryTree::sizeOfAllSubtrees)
+                .map(DirectoryTree::sizeOfNode)
                 .filter(i -> i >= spaceNeeded)
                 .mapToInt(i -> i)
                 .sorted()

@@ -6,24 +6,24 @@ import java.util.Optional;
 
 public class DirectoryTree {
 
-    private Directory data;
     private final List<DirectoryTree> children = new ArrayList<>();
+    private final Directory data;
     private DirectoryTree parent = null;
 
     public DirectoryTree(Directory data) {
         this.data = data;
     }
 
+    public static int sizeOfNode(DirectoryTree tree) {
+        int result = tree.getData().getSize();
+        for (var child : tree.getChildren()) {
+            result += sizeOfNode(child);
+        }
+        return result;
+    }
+
     public Directory getData() {
         return data;
-    }
-
-    public int getSize() {
-        return data.getSize();
-    }
-
-    public void setData(Directory data) {
-        this.data = data;
     }
 
     public List<DirectoryTree> getChildren() {
@@ -41,27 +41,12 @@ public class DirectoryTree {
         return child;
     }
 
-    public void addChildren(List<DirectoryTree> children) {
-        for(DirectoryTree t : children) {
-            t.setParent(this);
-        }
-        this.children.addAll(children);
-    }
-
     public Optional<DirectoryTree> getChildByName(String name) {
-        for(var child : children) {
-            if(child.getData().getName().equals(name))
+        for (var child : children) {
+            if (child.getData().getName().equals(name))
                 return Optional.of(child);
         }
         return Optional.empty();
-    }
-
-    public static int sizeOfAllSubtrees(DirectoryTree tree) {
-        int result = tree.getData().getSize();
-        for(var child : tree.getChildren()) {
-            result += sizeOfAllSubtrees(child);
-        }
-        return result;
     }
 
     public DirectoryTree getParent() {
