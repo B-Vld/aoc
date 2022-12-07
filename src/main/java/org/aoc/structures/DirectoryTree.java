@@ -7,7 +7,7 @@ import java.util.Optional;
 public class DirectoryTree {
 
     private Directory data;
-    private List<DirectoryTree> children = new ArrayList<>();
+    private final List<DirectoryTree> children = new ArrayList<>();
     private DirectoryTree parent = null;
 
     public DirectoryTree(Directory data) {
@@ -20,14 +20,6 @@ public class DirectoryTree {
 
     public int getSize() {
         return data.getSize();
-    }
-
-    public int getTotalSize() {
-        int result = getSize();
-        for(var child : children) {
-            result+=child.getSize();
-        }
-        return result;
     }
 
     public void setData(Directory data) {
@@ -43,9 +35,10 @@ public class DirectoryTree {
         this.children.add(child);
     }
 
-    public void addChild(Directory data) {
+    public DirectoryTree addChild(Directory data) {
         DirectoryTree child = new DirectoryTree(data);
         this.addChild(child);
+        return child;
     }
 
     public void addChildren(List<DirectoryTree> children) {
