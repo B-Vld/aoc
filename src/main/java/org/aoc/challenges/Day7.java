@@ -22,7 +22,7 @@ public class Day7 implements Challenge {
     @Override
     public void firstChallenge(String fileName) {
 
-        var input = Input.allLinesDefaultDelimiter("day7.txt")
+        var input = Input.allLinesDefaultDelimiter(fileName)
                 .map(str -> str.split(" "))
                 .toList();
         var rootAsInput = input.get(0);

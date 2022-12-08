@@ -14,10 +14,14 @@ public class Main {
     private static final String CHALLENGES = "org.aoc.challenges.";
 
     public static void main(String[] args) {
-        Challenge challenge = getChallenge();
-        assert challenge != null;
-        challenge.firstChallenge(getFileName());
-        challenge.secondChallenge(getFileName());
+        if (DAY_OF_MONTH <= 25) {
+            Challenge challenge = getChallenge();
+            assert challenge != null;
+            challenge.firstChallenge(getFileName());
+            challenge.secondChallenge(getFileName());
+        } else {
+            log.info("AoC22 finished");
+        }
     }
 
     static String getClassName() {
