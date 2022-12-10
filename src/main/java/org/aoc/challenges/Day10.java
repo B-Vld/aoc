@@ -7,8 +7,13 @@ import org.aoc.enums.Command;
 import org.aoc.utils.Helper;
 import org.aoc.utils.Input;
 
+import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
+
+import static org.aoc.enums.Command.ADDX;
+import static org.aoc.enums.Command.NOOP;
 
 @Slf4j
 @Day(day = 10)
@@ -37,7 +42,40 @@ public class Day10 implements Challenge {
 
     @Override
     public void secondChallenge(String fileName) {
+        int x = 1;
+        int currentCycle = 0;
+        var builder = new StringBuilder();
+        var input = Input.allLinesDefaultDelimiter(fileName)
+                .flatMap(line -> Stream.of(line.split(" ")))
+                .collect(Collectors.toCollection(LinkedList::new));
+        while (!input.isEmpty()) {
+            if (currentCycle > 40) {
+                currentCycle -= 40;
+            }
+            var command = input.removeFirst();
+            if (Command.of(command) == NOOP) {
+                currentCycle++;
+                addToBuilder(builder, currentCycle, x);
+            }
+            if (Command.of(command) == ADDX) {
+                currentCycle++;
+                addToBuilder(builder, currentCycle, x);
+                currentCycle++;
+                addToBuilder(builder, currentCycle, x);
+                x += Integer.parseInt(input.removeFirst());
+            }
+        }
+        /*ZGCJZJFL*/
+        log.info("Day 10 second challenge {}{}", "\n", builder);
+    }
 
+    private void addToBuilder(StringBuilder stringBuilder, int currentCycle, int x) {
+        if (x == currentCycle || x + 1 == currentCycle || x + 2 == currentCycle) {
+            stringBuilder.append('#');
+        } else {
+            stringBuilder.append('.');
+        }
+        if (currentCycle % 40 == 0) stringBuilder.append("\n");
     }
 
     private int cycles(Command cmd) {
