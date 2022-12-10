@@ -47,7 +47,7 @@ public class Input {
     }
 
     public static List<String> readFirstXLines(String name, int x) {
-        return readAsString(name, "\n")
+        return readAsString(name, DEFAULT_LINE_DELIMITER)
                 .toList()
                 .stream()
                 .limit(x)
@@ -55,7 +55,7 @@ public class Input {
     }
 
     public static List<String> readSkipXLines(String name, int x) {
-        return readAsString(name, "\n")
+        return readAsString(name, DEFAULT_LINE_DELIMITER)
                 .toList()
                 .stream()
                 .skip(x)
