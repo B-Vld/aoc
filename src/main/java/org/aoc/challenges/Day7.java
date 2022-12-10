@@ -9,7 +9,8 @@ import org.aoc.utils.Input;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Pattern;
+
+import static org.aoc.utils.Helper.isNumeric;
 
 @Day(day = 7)
 @Slf4j
@@ -17,7 +18,6 @@ public class Day7 implements Challenge {
 
     private static final List<DirectoryTree> nodesHolder = new ArrayList<>();
     private static DirectoryTree ROOT;
-    private final Pattern NUMERIC = Pattern.compile("-?\\d+(\\.\\d+)?");
 
     @Override
     public void firstChallenge(String fileName) {
@@ -86,14 +86,6 @@ public class Day7 implements Challenge {
                 .orElse(-1);
 
         log.info("Day 7 second challenge {}", result);
-    }
-
-
-    public boolean isNumeric(String strNum) {
-        if (strNum == null) {
-            return false;
-        }
-        return NUMERIC.matcher(strNum).matches();
     }
 
 }
