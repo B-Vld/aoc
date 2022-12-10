@@ -37,7 +37,7 @@ public class Day10 implements Challenge {
                     .reduce(0, Integer::sum) + 1) * i;
             result += r;
         }
-        log.info("Day 10 first challenge {}", result);
+        log.info("Day 10 first challenge : {}", result);
     }
 
     @Override
@@ -66,7 +66,7 @@ public class Day10 implements Challenge {
             }
         }
         /*ZGCJZJFL*/
-        log.info("Day 10 second challenge {}{}", "\n", builder);
+        log.info("Day 10 second challenge : {}{}", "\n", builder);
     }
 
     private void addToBuilder(StringBuilder stringBuilder, int currentCycle, int x) {
