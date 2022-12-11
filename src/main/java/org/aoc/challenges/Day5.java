@@ -5,7 +5,10 @@ import org.aoc.Challenge;
 import org.aoc.annotations.Day;
 import org.aoc.utils.Input;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Stream;
 
 @Day(day = 5)
@@ -85,7 +88,7 @@ public class Day5 implements Challenge {
     private void moveCratesSecond(Map<Integer, LinkedList<Character>> map, int move, int from, int to) {
         var lstFrom = map.get(from);
         var lstTo = map.get(to);
-        if(move == 1) {
+        if (move == 1) {
             if (lstFrom != null && lstFrom.peek() != null) {
                 lstTo.addLast(lstFrom.removeLast());
             }
