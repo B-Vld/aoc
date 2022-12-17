@@ -16,11 +16,12 @@ public class Mon {
     private Predicate<Long> predicate;
     private long inspected;
 
-    public void round(Map<Integer, Mon> monMap, int monIdx, long dWlvl) {
+    public void round(Map<Integer, Mon> monMap, int monIdx, long dWlvl, long lcm) {
         var mon = monMap.get(monIdx);
         while (!mon.items.isEmpty()) {
             var itm = mon.items.removeFirst();
-            var wLvl = Long.divideUnsigned(this.operation.apply(itm), dWlvl);
+            var wLvl = lcm == 1L ? Long.divideUnsigned(this.operation.apply(itm), dWlvl) :          // part 1
+                                         Long.divideUnsigned(this.operation.apply(itm), dWlvl) % lcm;     // part 2
             this.inspected++;
             if (this.predicate.test(wLvl)) {
                 switch (monIdx) {

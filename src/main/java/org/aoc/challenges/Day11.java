@@ -19,10 +19,13 @@ public class Day11 implements Challenge {
 
     @Override
     public void firstChallenge(String fileName) {
+        /*
+            No parsing cuz weekend
+         */
         var map = initMap();
         IntStream.range(0, 20)
                 .forEach(i -> IntStream.range(0, map.size())
-                        .forEach(j -> map.get(j).round(map, j, 3L)));
+                        .forEach(j -> map.get(j).round(map, j, 3L, 1L)));
         var result = map
                 .values()
                 .stream()
@@ -36,9 +39,16 @@ public class Day11 implements Challenge {
     @Override
     public void secondChallenge(String fileName) {
         var map = initMap();
+        /*
+            In part 2, no worry reduction happens.
+            The way to keep worry manageable is to multiply the test divisors of all monkeys together.
+            They happen to be prime, so this produces the least common multiple that we can mod with the item worry
+            to keep it manageable. Hardcoded lcm :
+        */
+        var lcm = 11L * 5L * 19L * 13L * 7L * 17L * 2L * 3L;
         IntStream.range(0, 10_000)
                 .forEach(i -> IntStream.range(0, map.size())
-                        .forEach(j -> map.get(j).round(map, j, 1L)));
+                        .forEach(j -> map.get(j).round(map, j, 1L, lcm)));
         var result = map
                 .values()
                 .stream()
