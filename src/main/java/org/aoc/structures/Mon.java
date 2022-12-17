@@ -2,7 +2,6 @@ package org.aoc.structures;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.Setter;
 
 import java.util.LinkedList;
 import java.util.Map;
@@ -11,7 +10,6 @@ import java.util.function.Predicate;
 
 @Data
 @AllArgsConstructor
-@Setter
 public class Mon {
     private LinkedList<Long> items;
     private Function<Long, Long> operation;
