@@ -46,6 +46,13 @@ public class Input {
                 .values();
     }
 
+    public static <T> Collection<List<T>> partitionList(List<T> input, int size) {
+        return IntStream.range(0, input.size())
+                .boxed()
+                .collect(Collectors.groupingBy(partition -> (partition / size), Collectors.mapping(input::get, Collectors.toList())))
+                .values();
+    }
+
     public static List<String> readFirstXLines(String name, int x) {
         return readAsString(name, DEFAULT_LINE_DELIMITER)
                 .toList()
