@@ -5,14 +5,13 @@ import org.aoc.utils.ChallengeFetcher;
 
 import java.time.Duration;
 import java.time.Instant;
-import java.time.LocalDate;
 
 @Slf4j
 public class Main {
 
     public static void main(String[] args) {
 //        final var DAY_OF_MONTH = LocalDate.now().getDayOfMonth();
-        final var DAY_OF_MONTH = 13;
+        final var DAY_OF_MONTH = 24;
         if (DAY_OF_MONTH <= 25) {
             var challengePair = ChallengeFetcher.challengeInputPair(DAY_OF_MONTH);
             var challenge = challengePair.getLeft();

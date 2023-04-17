@@ -1,4 +1,4 @@
-package org.aoc.utils;
+package org.aoc.structures.dao;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

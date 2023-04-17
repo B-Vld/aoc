@@ -3,8 +3,8 @@ package org.aoc.challenges;
 import lombok.extern.slf4j.Slf4j;
 import org.aoc.Challenge;
 import org.aoc.annotations.Day;
-import org.aoc.structures.Directory;
-import org.aoc.structures.DirectoryTree;
+import org.aoc.structures.dao.Directory;
+import org.aoc.structures.dao.DirectoryTree;
 import org.aoc.utils.Input;
 
 import java.util.ArrayList;

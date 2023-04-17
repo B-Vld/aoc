@@ -1,7 +1,8 @@
 package org.aoc.structures;
 
 import lombok.Data;
-import org.aoc.utils.Position;
+import org.aoc.structures.dao.Position;
+import org.aoc.structures.dao.QItem;
 
 import java.util.ArrayList;
 import java.util.Arrays;

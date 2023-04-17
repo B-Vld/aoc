@@ -4,8 +4,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.aoc.Challenge;
 import org.aoc.annotations.Day;
 import org.aoc.structures.GridBFS;
+import org.aoc.structures.dao.Position;
 import org.aoc.utils.Input;
-import org.aoc.utils.Position;
 import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.HashSet;

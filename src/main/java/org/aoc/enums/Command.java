@@ -1,13 +1,16 @@
 package org.aoc.enums;
 
+import lombok.Getter;
+
 import java.util.Arrays;
 
+@Getter
 public enum Command {
 
     ADDX("addx"),
     NOOP("noop");
 
-    private String value;
+    private final String value;
 
     Command(String value) {
         this.value = value;
@@ -18,14 +21,6 @@ public enum Command {
                 .filter(v -> value.equalsIgnoreCase(v.getValue()))
                 .findFirst()
                 .orElse(null);
-    }
-
-    public String getValue() {
-        return value;
-    }
-
-    public void setValue(String value) {
-        this.value = value;
     }
 
 }

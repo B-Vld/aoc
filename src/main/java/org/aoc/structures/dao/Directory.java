@@ -1,4 +1,4 @@
-package org.aoc.structures;
+package org.aoc.structures.dao;
 
 public class Directory {
 

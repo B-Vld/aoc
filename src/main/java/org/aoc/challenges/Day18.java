@@ -3,8 +3,8 @@ package org.aoc.challenges;
 import lombok.extern.slf4j.Slf4j;
 import org.aoc.Challenge;
 import org.aoc.annotations.Day;
+import org.aoc.structures.dao.Pos3;
 import org.aoc.utils.Input;
-import org.aoc.utils.Pos3;
 
 @Slf4j
 @Day(day = 18)

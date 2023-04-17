@@ -1,8 +1,7 @@
-package org.aoc.structures;
+package org.aoc.structures.dao;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import org.aoc.utils.Position;
 
 import java.util.List;
 

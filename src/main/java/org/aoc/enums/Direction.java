@@ -12,7 +12,4 @@ public enum Direction {
         this.value = value;
     }
 
-    public String getValue() {
-        return value;
-    }
 }

@@ -22,20 +22,18 @@ public class Day13 implements Challenge {
                         .toList(), 2)
                 .stream()
                 .toList();
-
-        for(int i = 0; i<input.size(); i++) {
+        for (int i = 0; i < input.size(); i++) {
             var pair = input.get(i);
-            if(compare(pair.get(0), pair.get(1)) <= 0) {
+            if (compare(pair.get(0), pair.get(1)) <= 0) {
                 result += i + 1;
             }
         }
-
         log.info("Day 13 first challenge : {}", result);
     }
 
     @Override
     public void secondChallenge(String fileName) {
-
+        
     }
 
     private List<Object> parsePacketFromJsonArray(JsonArray elements) {
