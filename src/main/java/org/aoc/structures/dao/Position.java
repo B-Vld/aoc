@@ -7,8 +7,8 @@ import org.aoc.enums.Direction;
 @Data
 @AllArgsConstructor
 public class Position {
-    private int x;
-    private int y;
+    public int x;
+    public int y;
 
     public static Position of(int x, int y) {
         return new Position(x, y);

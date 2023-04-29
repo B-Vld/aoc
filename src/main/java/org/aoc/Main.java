@@ -11,7 +11,8 @@ import java.time.LocalDate;
 public class Main {
 
     public static void main(String[] args) {
-        final var DAY_OF_MONTH = LocalDate.now().getDayOfMonth();
+//        final var DAY_OF_MONTH = LocalDate.now().getDayOfMonth();
+        final var DAY_OF_MONTH = 14;
         if (DAY_OF_MONTH <= 25) {
             var challengePair = ChallengeFetcher.challengeInputPair(DAY_OF_MONTH);
             var challenge = challengePair.getLeft();
@@ -23,6 +24,8 @@ public class Main {
     }
 
     private static void runChallenges(Challenge challenge, String inputFile) {
+        if(challenge == null)
+            return;
         Instant start1 = Instant.now();
         challenge.firstChallenge(inputFile);
         Instant end1 = Instant.now();
