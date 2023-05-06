@@ -19,7 +19,7 @@ class Day14 : Challenge {
                 .map { str -> str.split(" -> ") }
                 .forEach { line -> processLine(positions, line) }
         val initialPositions = positions.size
-        while (fallingSand(positions, 1000, 0) == SandEvent.CONTINUE) { }
+        while (fallingSand(positions, 1000) == SandEvent.CONTINUE)
         println("Day 14 first challenge : ${positions.size - initialPositions}")
     }
 
@@ -30,11 +30,11 @@ class Day14 : Challenge {
                 .forEach { line -> processLine(positions, line) }
         val initialPositions = positions.size
         val maxX = positions.maxOf { it.x } + 1
-        while (fallingSand(positions, -1, maxX) == SandEvent.CONTINUE) { }
+        while (fallingSand(positions, -1, maxX) == SandEvent.CONTINUE)
         println("Day 14 second challenge : ${positions.size - initialPositions}")
     }
 
-    private fun fallingSand(walls: MutableSet<Position>, stopX: Int, maxX: Int): SandEvent {
+    private fun fallingSand(walls: MutableSet<Position>, stopX: Int, maxX: Int = 0): SandEvent {
         var part2 = false
 
         if(maxX != 0) part2 = true
@@ -89,13 +89,13 @@ class Day14 : Challenge {
             val col1 = p1Str[1].toInt()
             val col2 = p2Str[1].toInt()
             if (row1 == row2) {
-                for (i in min(col1, col2)..max(col1, col2)) {
-                    p.add(Position.of(i, row1))
+                for (j in min(col1, col2)..max(col1, col2)) {
+                    p.add(Position.of(j, row1))
                 }
             }
             if (col1 == col2) {
-                for (i in min(row1, row2)..max(row1, row2)) {
-                    p.add(Position.of(col1, i))
+                for (j in min(row1, row2)..max(row1, row2)) {
+                    p.add(Position.of(col1, j))
                 }
             }
         }
