@@ -19,7 +19,8 @@ class Day14 : Challenge {
                 .map { str -> str.split(" -> ") }
                 .forEach { line -> processLine(positions, line) }
         val initialPositions = positions.size
-        while (fallingSand(positions, 1000) == SandEvent.CONTINUE)
+        while (fallingSand(positions, 1000) == SandEvent.CONTINUE) {
+        }
         println("Day 14 first challenge : ${positions.size - initialPositions}")
     }
 
@@ -30,7 +31,8 @@ class Day14 : Challenge {
                 .forEach { line -> processLine(positions, line) }
         val initialPositions = positions.size
         val maxX = positions.maxOf { it.x } + 1
-        while (fallingSand(positions, -1, maxX) == SandEvent.CONTINUE)
+        while (fallingSand(positions, -1, maxX) == SandEvent.CONTINUE) {
+        }
         println("Day 14 second challenge : ${positions.size - initialPositions}")
     }
 
