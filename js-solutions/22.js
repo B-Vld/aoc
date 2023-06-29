@@ -39,19 +39,19 @@ function readInput(inputPath) {
     const commands = readFileSync(inputPath)
         .toString()
         .split('\r\n');
-    const labirinth = commands.splice(0, commands.indexOf(''));
-    const maxLine = Math.max(...labirinth.map(e => e.length))
+    const labyrinth = commands.splice(0, commands.indexOf(''));
+    const maxLine = Math.max(...labyrinth.map(e => e.length))
     let startingPosition = undefined;
     commands.shift();
     let matrix = [];
-    for (let i = 0; i < labirinth.length; i++) {
+    for (let i = 0; i < labyrinth.length; i++) {
         let line = [];
         for (let j = 0; j < maxLine; j++) {
-            if (labirinth[i][j] === ' ' || labirinth[i][j] === undefined) {
+            if (labyrinth[i][j] === ' ' || labyrinth[i][j] === undefined) {
                 line.push('E');
             } else {
-                if (startingPosition === undefined && labirinth[i][j] === '.') startingPosition = [i, j];
-                line.push(labirinth[i][j])
+                if (startingPosition === undefined && labyrinth[i][j] === '.') startingPosition = [i, j];
+                line.push(labyrinth[i][j])
             };
         }
         matrix.push(line);
@@ -194,8 +194,8 @@ function solve1(lab, ins, sPos) {
 }
 
 function part1() {
-    const [instructions, labirinth, startingPosition] = readInput('./src/input/22.txt');
-    const [row, col, facing] = solve1(labirinth, instructions, startingPosition);
+    const [instructions, labyrinth, startingPosition] = readInput('./src/input/22.txt');
+    const [row, col, facing] = solve1(labyrinth, instructions, startingPosition);
     console.log((1000 * (row + 1)) + (4 * (col + 1)) + facing);
 }
 

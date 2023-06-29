@@ -33,7 +33,22 @@ public class Day13 implements Challenge {
 
     @Override
     public void secondChallenge(String fileName) {
-        
+        var packet2 = parsePacket("[[2]]");
+        var packet6 = parsePacket("[[6]]");
+
+        var modifiedInput = new ArrayList<>(Input
+                .allLinesDefaultDelimiter(fileName)
+                .filter(str -> !str.isEmpty())
+                .map(this::parsePacket)
+                .toList());
+
+        modifiedInput.add(packet2);
+        modifiedInput.add(packet6);
+
+        var finalInput = modifiedInput.stream().sorted(this::compare).toList();
+        finalInput.forEach(System.out::println);
+
+        log.info("Day 13 second challenge : {}", (finalInput.indexOf(packet2) + 1 ) * (finalInput.indexOf(packet6) + 1));
     }
 
     private List<Object> parsePacketFromJsonArray(JsonArray elements) {

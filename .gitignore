@@ -16,5 +16,7 @@ buildNumber.properties
 .project
 # JDT-specific (Eclipse Java Development Tools)
 .classpath
+.idea
+aoc-java.iml
 
 src/main/resources/*.txt
