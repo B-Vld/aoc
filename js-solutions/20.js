@@ -12,10 +12,9 @@ class CircularLinkedList {
 }
 
 function load(arr) {
-    let all = [], sz = arr.length;
+    const all = [], sz = arr.length;
     for (let i = 0; i < sz; i++) {
-        let e = arr[i];
-        let curr = new CircularLinkedList(e);
+        const e = arr[i], curr = new CircularLinkedList(e);
         if (all.length !== 0) {
             let prev = all[i - 1];
             prev.next = curr;
@@ -32,11 +31,10 @@ function shuffle(arr, times) {
     const sz = arr.length - 1;
     for (let i = 0; i < times; i++) {
         arr.forEach((e) => {
-            let steps = e.data % sz;
+            let steps = e.data % sz, nPrev = e.prev;
             if (steps !== 0) {
                 e.prev.next = e.next;
                 e.next.prev = e.prev;
-                let nPrev = e.prev;
                 while (steps !== 0) {
                     steps > 0 ? nPrev = nPrev.next : nPrev = nPrev.prev;
                     steps > 0 ? steps-- : steps++;
@@ -67,7 +65,7 @@ function getResult(arr) {
 }
 
 function part1(path) {
-    let input = load(getInput(path));
+    const input = load(getInput(path));
     shuffle(input, 1);
     console.log(getResult(input));
 }
