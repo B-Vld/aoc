@@ -46,7 +46,6 @@ public class Day13 implements Challenge {
         modifiedInput.add(packet6);
 
         var finalInput = modifiedInput.stream().sorted(this::compare).toList();
-        finalInput.forEach(System.out::println);
 
         log.info("Day 13 second challenge : {}", (finalInput.indexOf(packet2) + 1 ) * (finalInput.indexOf(packet6) + 1));
     }

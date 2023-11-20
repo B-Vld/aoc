@@ -16,8 +16,8 @@ class Day14 : Challenge {
     override fun firstChallenge(fileName: String?) {
         val positions = mutableSetOf<Position>()
         Input.allLinesDefaultDelimiter(fileName)
-                .map { str -> str.split(" -> ") }
-                .forEach { line -> processLine(positions, line) }
+                .map { it.split(" -> ") }
+                .forEach { processLine(positions, it) }
         val initialPositions = positions.size
         while (fallingSand(positions, 1000) == SandEvent.CONTINUE) {
         }
@@ -27,8 +27,8 @@ class Day14 : Challenge {
     override fun secondChallenge(fileName: String?) {
         val positions = mutableSetOf<Position>()
         Input.allLinesDefaultDelimiter(fileName)
-                .map { str -> str.split(" -> ") }
-                .forEach { line -> processLine(positions, line) }
+                .map { it.split(" -> ") }
+                .forEach { processLine(positions, it) }
         val initialPositions = positions.size
         val maxX = positions.maxOf { it.x } + 1
         while (fallingSand(positions, -1, maxX) == SandEvent.CONTINUE) {
@@ -41,10 +41,7 @@ class Day14 : Challenge {
 
         if(maxX != 0) part2 = true
 
-        var sand = if(part2)
-            Position.of(0, 500)
-        else
-            Position.of(0, 500)
+        var sand = Position.of(0, 500)
 
         var nextPosition = decidePosition(sand, walls)
 

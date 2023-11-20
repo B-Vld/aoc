@@ -21,7 +21,7 @@ public class Mon {
         while (!mon.items.isEmpty()) {
             var itm = mon.items.removeFirst();
             var wLvl = lcm == 1L ? Long.divideUnsigned(this.operation.apply(itm), dWlvl) :          // part 1
-                                         Long.divideUnsigned(this.operation.apply(itm), dWlvl) % lcm;     // part 2
+                                   Long.divideUnsigned(this.operation.apply(itm), dWlvl) % lcm;     // part 2
             this.inspected++;
             if (this.predicate.test(wLvl)) {
                 switch (monIdx) {

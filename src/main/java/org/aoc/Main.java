@@ -11,8 +11,8 @@ import java.time.LocalDate;
 public class Main {
 
     public static void main(String[] args) {
-        final var DAY_OF_MONTH = LocalDate.now().getDayOfMonth();
-//        final var DAY_OF_MONTH = 14;
+//        final var DAY_OF_MONTH = LocalDate.now().getDayOfMonth();
+        final var DAY_OF_MONTH = 19;
         if (DAY_OF_MONTH <= 25) {
             var challengePair = ChallengeFetcher.challengeInputPair(DAY_OF_MONTH);
             var challenge = challengePair.getLeft();

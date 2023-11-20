@@ -107,7 +107,7 @@ public class Day9 implements Challenge {
 
     boolean isTailNotInRange(Position head, Position tail) {
         return (Math.abs(head.getX() - tail.getX()) != 0 && Math.abs(head.getX() - tail.getX()) != 1) ||
-                (Math.abs(head.getY() - tail.getY()) != 0 && Math.abs(head.getY() - tail.getY()) != 1);
+               (Math.abs(head.getY() - tail.getY()) != 0 && Math.abs(head.getY() - tail.getY()) != 1);
     }
 
 }
