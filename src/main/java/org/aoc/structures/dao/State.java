@@ -78,14 +78,10 @@ public record State(Quantity pouch, Quantity robots, int minute) implements Comp
 
     @Override
     public int compareTo(@NotNull State o) {
-        return -Integer.compare(this.robots.countAll(), o.robots.countAll());
-//        return this.robots.countAll() > o.robots().countAll() ? 1 : -1;
-////        return Comparator.comparingInt(State::minute)
-////                .thenComparing(e -> e.robots.geode())
-////                .thenComparing(e -> e.robots.obsidian())
-////                .thenComparing(e -> e.robots.clay())
-////                .thenComparing(e -> e.robots.ore())
-////                .compare(this, o);
+        if(this.robots.geode() > o.robots.geode()) {
+            return -1;
+        } else
+            return -Integer.compare(this.robots.countAll(), o.robots.countAll());
     }
 
 }

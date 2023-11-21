@@ -22,7 +22,7 @@ public class ChallengeFetcher {
             return (Challenge) Class.forName(format("%s%d", CHALLENGES_DAY, day)).getDeclaredConstructor().newInstance();
         } catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException |
                  ClassNotFoundException e) {
-            log.error(format("Challenge not found for day %d", day));
+            log.error(format("Challenge not found for day %d. Maybe in js-solutions.", day));
         }
         return null;
     }

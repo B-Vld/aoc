@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.aoc.Challenge;
 import org.aoc.annotations.Day;
 import org.aoc.structures.dao.Blueprint;
+import org.aoc.structures.dao.PState;
 import org.aoc.structures.dao.Quantity;
 import org.aoc.structures.dao.State;
 import org.aoc.utils.Input;
@@ -31,18 +32,20 @@ public class Day19 implements Challenge {
     @Override
     public void secondChallenge(String fileName) {
         var result = Input.allLinesDefaultDelimiter(fileName)
+                .limit(3)
                 .map(str -> Arrays.stream(str.split("\\D+")).filter(s -> !s.isEmpty()).mapToInt(Integer::parseInt).toArray())
                 .map(Blueprint::toBlueprint)
                 .map(e -> solve(e, 32))
-                .mapToInt(i -> i.getLeft() * i.getRight())
-                .sum();
+                .mapToInt(Pair::getRight)
+                .reduce(1, (left, right) -> left * right);
 
         log.info("Day 19 second challenge: {}", result);
     }
 
     private Pair<Integer, Integer> solve(Blueprint bp, int time) {
         Queue<State> queue = new PriorityQueue<>(State::compareTo);
-        Set<State> seen = new HashSet<>();
+        Map<PState, Integer> seen = new HashMap<>();
+        int sumGeodeAcquisitionMinute = 0, countFirstGeodeAcquisition = 0;
         Set<Integer> geodes = new HashSet<>();
         queue.add(new State(
                 new Quantity(0, 0, 0, 0),
@@ -51,17 +54,34 @@ public class Day19 implements Challenge {
         ));
         while (!queue.isEmpty()) {
             var state = queue.poll();
+            var pState = new PState(state);
             int timeLeft = time - state.minute();
-            if (!seen.contains(state)) {
-                seen.add(state);
-            } else continue;
+            if (countFirstGeodeAcquisition != 0) {
+                if (state.minute() > (sumGeodeAcquisitionMinute / countFirstGeodeAcquisition) && state.robots().geode() == 0) {
+                    continue;
+                }
+            }
+            if (!seen.containsKey(pState)) {
+                seen.put(pState, timeLeft);
+            } else {
+                if (seen.get(pState) >= timeLeft) {
+                    continue;
+                } else {
+                    seen.replace(pState, timeLeft);
+                }
+            }
             if (timeLeft == 0) {
-                geodes.add(state.pouch().geode() + state.robots().geode());
+                int finalGeodes = state.pouch().geode() + state.robots().geode();
+                geodes.add(finalGeodes);
                 continue;
             }
 
             if (state.pouch().canBuy(timeLeft, state.robots(), bp, GEODE)) {
                 var nState = state.buyAndProduce(bp, GEODE);
+                if (state.robots().geode() == 0) {
+                    countFirstGeodeAcquisition++;
+                    sumGeodeAcquisitionMinute += state.minute() + 1;
+                }
                 queue.add(nState);
                 continue;
             }
