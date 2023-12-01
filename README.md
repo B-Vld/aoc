@@ -1,3 +1,3 @@
-## AOC 22
+## AOC
 
-My solutions for [advent of code 2022](https://adventofcode.com/2022). Mostly Java, sometimes Js or Kotlin
+My solutions for [Advent of Code](https://adventofcode.com). Mostly Java, sometimes Js or Kotlin
