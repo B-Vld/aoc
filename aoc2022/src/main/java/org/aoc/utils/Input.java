@@ -16,7 +16,8 @@ import java.util.stream.Stream;
 public class Input {
 
     private static final String DEFAULT_LINE_DELIMITER = "\r\n";
-    private static final String CONTENT_ROOT = "src/main/resources";
+    private static final String CONTENT_ROOT = "aoc2022/src/main/resources";
+
 
     public static Stream<String> allLinesDefaultDelimiter(String fileName) {
         return Arrays.stream(readAsString(fileName).split(DEFAULT_LINE_DELIMITER));
