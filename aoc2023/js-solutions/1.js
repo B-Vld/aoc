@@ -1,7 +1,7 @@
 import { readFileSync } from "fs";
 
-const FP_EXAMPLE = './src/2023/input/1-example.txt';
-const FP_ACTUAL = './src/2023/input/1.txt';
+const FP_EXAMPLE = './aoc2023/inputs/1/1-example.txt';
+const FP_ACTUAL = './aoc2023/inputs/1/1.txt';
 
 function getInput(path) {
     return readFileSync(path).toString().split("\r\n");
