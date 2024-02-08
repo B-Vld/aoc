@@ -62,49 +62,66 @@ function bfsDistances(cNode, iMap, relevantNodes) {
 }
 
 function solve(map, maxMinute) {
-    const state = new State('AA', 1, new Set(), [], 0, 0), states = [];
+    const state = new State('AA', 1, new Set(), [], 0, 0), states = [], rz = [], cache = new Set();
     const results = new Set();
+    const max_relieved_states = new Map();
     states.push(state);
     while (states.length > 0) {
-        const curr = states.shift();
+        const curr = states.pop();
+        const currStr = JSON.stringify({
+            node: curr.node,
+            minute: curr.minute,
+            visited: [...curr.visited]
+        });
+        cache.add(currStr);
         let nextFlowRate = curr.rate * (maxMinute - curr.minute + 1);
         if ((curr.visited.size >= map.size - 1) ||
-            (curr.minute + map.get(curr.node).paths[0].minute > maxMinute)
+            (curr.minute + map.get(curr.node).paths[0].distance > maxMinute)
         ) {
             results.add(curr.flowRate + nextFlowRate);
+            rz.push({
+                flowRate: curr.flowRate + nextFlowRate,
+                visited: [...curr.visited],
+                path: curr.path
+            });
         } else {
-            for (let path of map.get(curr.node).paths) {
-                if (!curr.visited.has(path.node)) {
-                    nextFlowRate = curr.rate * (path.distance + 1);
-                    const next = new State(
-                        path.node,
-                        curr.minute + path.distance + 1,
-                        new Set(curr.visited),
-                        [...curr.path],
-                        curr.rate + path.flowRate,
-                        curr.flowRate + nextFlowRate);
+            const allPaths = map.get(curr.node).paths.filter(p => !curr.visited.has(p.node));
+            for (let path of allPaths) {
+                nextFlowRate = curr.rate * (path.distance + 1);
+                const next = new State(
+                    path.node,
+                    curr.minute + path.distance + 1,
+                    new Set(curr.visited),
+                    [...curr.path],
+                    curr.rate + path.flowRate,
+                    curr.flowRate + nextFlowRate);
 
-                    if (next.minute <= maxMinute) {
-                        next.visited.add(path.node);
-                        next.path.push({
-                            node: path.node,
-                            minute: curr.minute + path.distance + 1,
-                            flowRate: path.flowRate
-                        });
+                if (next.minute <= maxMinute) {
+                    next.visited.add(path.node);
+                    next.path.push({
+                        node: path.node,
+                        minute: curr.minute + path.distance + 1,
+                        flowRate: path.flowRate
+                    });
+                    if (!cache.has(JSON.stringify({
+                        node: next.node,
+                        minute: next.minute,
+                        visited: [...next.visited]
+                    }))) {
                         states.push(next);
-                    } else {
-                        nextFlowRate = curr.rate * (maxMinute - curr.minute + 1);
-                        results.add(curr.flowRate + nextFlowRate);
                     }
+                } else {
+                    nextFlowRate = curr.rate * (maxMinute - curr.minute + 1);
+                    results.add(curr.flowRate + nextFlowRate);
                 }
             }
         }
     }
-    return Math.max(...[...results]);
+    return [Math.max(...[...results]), rz];
 }
 
 function part1(input) {
-    console.log(solve(getInput(input), 30));
+    console.log(solve(getInput(input), 30)[0]);
 }
 
 function part2(input) {
@@ -112,6 +129,6 @@ function part2(input) {
 }
 
 part1(FP_ACTUAL);
-// part1(FP_EXAMPLE);
+part1(FP_EXAMPLE);
 // part2(FP_ACTUAL);
 // part2(FP_EXAMPLE);
