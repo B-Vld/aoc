@@ -61,10 +61,30 @@ function bfsDistances(cNode, iMap, relevantNodes) {
     return distances;
 }
 
+function calculateWaterGenerated(input, targetMinute) {
+    let totalWater = 0;
+    let currentMinute = 1;
+    let currentFlowRate = 0;
+    for (const item of input) {
+        while (currentMinute < item.minute && currentMinute <= targetMinute) {
+            totalWater += currentFlowRate;
+            currentMinute++;
+        }
+        if (currentMinute > targetMinute) {
+            break;
+        }
+        currentFlowRate += item.flowRate;
+    }
+    while (currentMinute <= targetMinute) {
+        totalWater += currentFlowRate;
+        currentMinute++;
+    }
+    return totalWater;
+}
+
 function solve(map, maxMinute) {
     const state = new State('AA', 1, new Set(), [], 0, 0), states = [], rz = [], cache = new Set();
     const results = new Set();
-    const max_relieved_states = new Map();
     states.push(state);
     while (states.length > 0) {
         const curr = states.pop();
@@ -113,6 +133,11 @@ function solve(map, maxMinute) {
                 } else {
                     nextFlowRate = curr.rate * (maxMinute - curr.minute + 1);
                     results.add(curr.flowRate + nextFlowRate);
+                    rz.push({
+                        flowRate: curr.flowRate + nextFlowRate,
+                        visited: [...curr.visited],
+                        path: curr.path
+                    });
                 }
             }
         }
@@ -120,15 +145,46 @@ function solve(map, maxMinute) {
     return [Math.max(...[...results]), rz];
 }
 
+function compEl(paths) {
+    let max = 0;
+    while (paths.length > 0) {
+        const mainPath = paths.shift();
+        for (let i = 0; i < paths.length; i++) {
+            let flag = true;
+            const secondPath = paths[i];
+            const mainRoad = mainPath.path, secondRoad = secondPath.path;
+            const idx = Math.min(mainPath.visited.length, secondPath.visited.length);
+            for (let j = 0; j < idx; j++) {
+                if (mainRoad[j].node === secondRoad[j].node && mainRoad[j].minute === secondRoad[j].minute) {
+                    flag = false;
+                    break;
+                }
+            }
+            if (flag) {
+                const combined = [...mainRoad].concat([...secondRoad]).sort((a, b) => a.minute - b.minute);
+                const set = new Set(), combinedPairs = [];
+                combined.forEach((p) => {
+                    if (!set.has(p.node)) {
+                        set.add(p.node);
+                        combinedPairs.push(p);
+                    }
+                })
+                max = Math.max(max, calculateWaterGenerated(combinedPairs, 26));
+            }
+        }
+    }
+    return max;
+}
+
 function part1(input) {
     console.log(solve(getInput(input), 30)[0]);
 }
 
 function part2(input) {
-
+    console.log(compEl(solve(getInput(input), 26)[1].filter(a => a.visited.length >= 5)));
 }
 
-part1(FP_ACTUAL);
 part1(FP_EXAMPLE);
-// part2(FP_ACTUAL);
-// part2(FP_EXAMPLE);
+part2(FP_EXAMPLE);
+part1(FP_ACTUAL);
+part2(FP_ACTUAL); // 2283 with my input, atrocious runtime even when pruning the paths with visited >= 5
