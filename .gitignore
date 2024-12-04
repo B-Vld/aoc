@@ -1,3 +1,5 @@
 .idea
 .vscode
 package.json
+package-lock.json
+aoc2024/input
