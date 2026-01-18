@@ -2,14 +2,17 @@ package main
 
 import (
 	"bufio"
+	"context"
 	"fmt"
 	"log"
 	"math"
 	"os"
+	"runtime"
 	"slices"
 	"sort"
 	"strconv"
 	"strings"
+	"sync"
 	"time"
 )
 
@@ -211,15 +214,62 @@ func part2(coords []Coord, rectangles []Rectangle) int {
 }
 
 func maxInsideArea(xIdx, yIdx map[int]int, rectangles []Rectangle, outside map[int]map[int]struct{}) int {
-	for _, r := range rectangles {
+	workers := runtime.GOMAXPROCS(0)
+	jobs := make(chan Rectangle)
+	result := make(chan int, 1)
 
-		cr, ok := mapOldRectToCompressed(r, xIdx, yIdx)
-		if !ok {
-			continue
+	ctx, cancel := context.WithCancel(context.Background())
+	defer cancel()
+
+	var wg sync.WaitGroup
+
+	for range workers {
+		wg.Go(func() {
+			for {
+				select {
+				case <-ctx.Done():
+					return
+				case r, ok := <-jobs:
+					if !ok {
+						return
+					}
+
+					cr, ok := mapOldRectToCompressed(r, xIdx, yIdx)
+					if !ok {
+						continue
+					}
+
+					if isValidRectangle(cr, outside) {
+						select {
+						case result <- r.area:
+							cancel()
+						default:
+						}
+						return
+					}
+				}
+			}
+		})
+	}
+
+	go func() {
+		defer close(jobs)
+		for _, r := range rectangles {
+			select {
+			case <-ctx.Done():
+				return
+			case jobs <- r:
+			}
 		}
-		if isValidRectangle(cr, outside) {
-			return r.area
-		}
+	}()
+
+	go func() {
+		wg.Wait()
+		close(result)
+	}()
+
+	if area, ok := <-result; ok {
+		return area
 	}
 	return 0
 }

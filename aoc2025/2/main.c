@@ -2,8 +2,9 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdbool.h>
+#include <inttypes.h>
 
-typedef unsigned long long ull;
+typedef uint64_t u64;
 
 bool has_weird_pattern(char *num, int len, bool part1)
 {
@@ -50,27 +51,27 @@ bool has_weird_pattern(char *num, int len, bool part1)
     return false;
 }
 
-ull get_weird_patterns(char first[], char second[], size_t f_len, size_t s_len, bool part1)
+u64 get_weird_patterns(char first[], char second[], size_t f_len, size_t s_len, bool part1)
 {
-    ull res = 0ULL;
+    u64 res = 0;
 
     char *f_end;
     char *s_end;
-    ull _first = strtoull(first, &f_end, 10);
+    u64 _first = strtoul(first, &f_end, 10);
     if (has_weird_pattern(first, f_len, part1))
     {
         res += _first;
     }
-    ull _second = strtoull(second, &s_end, 10);
+    u64 _second = strtoul(second, &s_end, 10);
     if (has_weird_pattern(second, s_len, part1))
     {
         res += _second;
     }
-    for (ull i = _first + 1; i < _second; i++)
+    for (u64 i = _first + 1; i < _second; i++)
     {
-        int len = snprintf(NULL, 0, "%llu", i);
+        int len = snprintf("%" PRIu64 "\n", 0, "%" PRIu64, i);
         char *num = (char *)malloc(len + 1);
-        snprintf(num, len + 1, "%llu", i);
+        snprintf(num, len + 1, "%" PRIu64, i);
         if (has_weird_pattern(num, len, part1))
         {
             res += i;
@@ -80,9 +81,9 @@ ull get_weird_patterns(char first[], char second[], size_t f_len, size_t s_len, 
     return res;
 }
 
-ull solve(FILE *f, bool part1)
+u64 solve(FILE *f, bool part1)
 {
-    ull res = 0;
+    u64 res = 0;
     char *line = NULL;
     size_t len = 0;
     int sz_len = getline(&line, &len, f);
@@ -143,9 +144,9 @@ int main()
         fprintf(stderr, "Unable to open the file \n");
         return 0;
     }
-    printf("%llu\n", solve(f, true));
+    printf("%" PRIu64 "\n", solve(f, true));
     fseek(f, 0, SEEK_SET);
-    printf("%llu\n", solve(f, false));
+    printf("%" PRIu64 "\n", solve(f, false));
 
     bool z = 1 % 2 == 0;
 
