@@ -3,9 +3,8 @@ package org.aoc.utils;
 import org.apache.commons.lang3.tuple.Pair;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.charset.Charset;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
@@ -16,16 +15,17 @@ import java.util.stream.Stream;
 public class Input {
 
     private static final String DEFAULT_LINE_DELIMITER = "\r\n";
-    private static final String CONTENT_ROOT = "aoc2022/src/main/resources";
-
 
     public static Stream<String> allLinesDefaultDelimiter(String fileName) {
         return Arrays.stream(readAsString(fileName).split(DEFAULT_LINE_DELIMITER));
     }
 
     public static String readAsString(String name) {
-        try {
-            return Files.readString(Path.of(CONTENT_ROOT, name), Charset.defaultCharset());
+        try (InputStream is = Input.class.getClassLoader().getResourceAsStream(name)) {
+            if (is == null) {
+                throw new IllegalStateException("Resource not found on classpath: " + name);
+            }
+            return new String(is.readAllBytes(), Charset.defaultCharset());
         } catch (IOException e) {
             throw new IllegalStateException(e);
         }
@@ -43,14 +43,16 @@ public class Input {
         var input = readAsString(name, DEFAULT_LINE_DELIMITER).toList();
         return IntStream.range(0, input.size())
                 .boxed()
-                .collect(Collectors.groupingBy(partition -> (partition / size), Collectors.mapping(input::get, Collectors.toList())))
+                .collect(Collectors.groupingBy(partition -> (partition / size),
+                        Collectors.mapping(input::get, Collectors.toList())))
                 .values();
     }
 
     public static <T> Collection<List<T>> partitionList(List<T> input, int size) {
         return IntStream.range(0, input.size())
                 .boxed()
-                .collect(Collectors.groupingBy(partition -> (partition / size), Collectors.mapping(input::get, Collectors.toList())))
+                .collect(Collectors.groupingBy(partition -> (partition / size),
+                        Collectors.mapping(input::get, Collectors.toList())))
                 .values();
     }
 
@@ -70,7 +72,6 @@ public class Input {
                 .toList();
     }
 
-
     public static Collection<Pair<String, String>> readFilePartitionedByDelimiter(String name, String delimiter) {
         return readAsString(name, DEFAULT_LINE_DELIMITER)
                 .toList()
@@ -79,6 +80,5 @@ public class Input {
                 .map(strings -> Pair.of(strings[0], strings[1]))
                 .toList();
     }
-
 
 }

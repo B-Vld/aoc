@@ -16,22 +16,22 @@ public class Day1 implements Challenge {
 
     @Override
     public void firstChallenge(String fileName) {
-        Optional<Long> largest = totals().reduce(Math::max);
+        Optional<Long> largest = totals(fileName).reduce(Math::max);
         largest.ifPresent(val -> log.info("Largest stack: {}", val));
     }
 
     @Override
     public void secondChallenge(String fileName) {
-        Optional<Long> largestThree = totals()
+        Optional<Long> largestThree = totals(fileName)
                 .sorted(Comparator.reverseOrder())
                 .limit(3)
                 .reduce(Math::addExact);
         largestThree.ifPresent(val -> log.info("Total of largest three stacks: {}", val));
     }
 
-    private Stream<Long> totals() {
-        return Input.readString("day1.txt", "\r\n\r\n")
-                .map(group -> Arrays.stream(group.split("\r\n")).mapToLong(Long::parseLong).sum());
+    private Stream<Long> totals(String fileName) {
+        return Input.readString(fileName, "\\R\\R")
+                .map(group -> Arrays.stream(group.split("\\R")).mapToLong(Long::parseLong).sum());
     }
 
 }
